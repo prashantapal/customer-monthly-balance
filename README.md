@@ -1,3 +1,3 @@
 # customer-monthly-balance
 
-Calculating monthly balance of customer of Housing corporation development limited bank.
+Calculating monthly balance of customer of Housing Corporation Development Limited bank.
