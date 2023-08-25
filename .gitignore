@@ -1,0 +1,28 @@
+# IDEA project files
+*.iml
+*.iws
+*.ipr
+.idea
+
+# Gradle related files
+
+build/
+*.gradle
+gradle/
+gradlew*
+
+# Eclipse project files
+.classpath
+.project
+.settings
+eclipse-output/
+eclipse-output-test/
+
+# Maven build directory
+target/
+
+# OS Specific files
+.DS_Store
+
+# Log files
+.log
