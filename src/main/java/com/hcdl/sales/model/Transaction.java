@@ -38,6 +38,6 @@ public class Transaction {
     private TransactionType type;
 
     public static Sort sortById() {
-        return Sort.by("TRANSACTION_ID").ascending();
+        return Sort.by("id").ascending();
     }
 }

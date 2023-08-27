@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.hcdl.sales.model.TransactionType.CREDIT;
 import static com.hcdl.sales.model.TransactionType.DEBIT;
+import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
@@ -39,14 +41,15 @@ public class AccountStatementConverter {
     //Group the transactions per month and used LinkedHashMap to maintain the order
     private LinkedHashMap<LocalDate, List<AccountTransaction>> groupByMonth(List<AccountTransaction> accountTransactions) {
         return accountTransactions.stream().
-                collect(groupingBy(accountTransaction -> accountTransaction.getTransactionDate().toLocalDate(),
+                collect(groupingBy(accountTransaction -> accountTransaction.getTransactionDate().toLocalDate().with(firstDayOfMonth()), // group by first day of transaction date month
                         LinkedHashMap::new,
                         toList()));
     }
 
     private List<AccountStatement> monthlyAccountStatement(LinkedHashMap<LocalDate, List<AccountTransaction>> monthlyGroupedTransaction) {
         List<AccountStatement> accountStatements = new ArrayList<>();
-        BigDecimal cumulativeBalance = new BigDecimal(0);
+        AtomicReference<BigDecimal> cumulativeBalance = new AtomicReference<>();
+        cumulativeBalance.set(BigDecimal.ZERO);
         // The simple for loop maintains the stateful operation of the cumulative balance
         for (Map.Entry<LocalDate, List<AccountTransaction>> entry : monthlyGroupedTransaction.entrySet()) {
             accountStatements.add(getAccountStatement(entry.getKey(), entry.getValue(), cumulativeBalance));
@@ -54,13 +57,13 @@ public class AccountStatementConverter {
         return accountStatements;
     }
 
-    private AccountStatement getAccountStatement(LocalDate transactionMonth, List<AccountTransaction> accountTransactions, BigDecimal cumulativeBalance) {
+    private AccountStatement getAccountStatement(LocalDate transactionMonth, List<AccountTransaction> accountTransactions, AtomicReference<BigDecimal> cumulativeBalance) {
         final BigDecimal monthlyCredit = totalMonthlyCredit(accountTransactions);
         final BigDecimal monthlyDebit = totalMonthlyDebit(accountTransactions);
         final BigDecimal monthlyBalance = monthlyCredit.subtract(monthlyDebit);
         return new AccountStatement(transactionMonth, accountTransactions, monthlyCredit,
                 monthlyDebit, monthlyBalance,
-                cumulativeBalance.add(monthlyBalance));
+                cumulativeBalance.accumulateAndGet(monthlyBalance, BigDecimal::add));
     }
 
     private BigDecimal totalMonthlyCredit(List<AccountTransaction> accountTransactions) {

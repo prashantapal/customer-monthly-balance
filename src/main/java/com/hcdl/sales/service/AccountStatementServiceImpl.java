@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.hcdl.sales.model.Transaction.sortById;
 import static java.time.LocalDateTime.now;
 import static java.time.LocalTime.MIDNIGHT;
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
@@ -42,7 +43,7 @@ public class AccountStatementServiceImpl implements AccountStatementService {
     @Override
     public List<AccountStatement> fetchLastSixMonthsAccountStatement() {
         final LocalDateTime startDate = firstDayOfMonthBefore(6);
-        List<Transaction> transactions = transactionRepository.findTransactionsAfterDate(startDate, Transaction.sortById());
+        List<Transaction> transactions = transactionRepository.findTransactionsAfterDate(startDate, sortById());
         return converter.convert(transactions);
     }
 
@@ -53,7 +54,7 @@ public class AccountStatementServiceImpl implements AccountStatementService {
      */
     @Override
     public List<AccountStatement> fetchAllAccountStatement() {
-        List<Transaction> transactions = transactionRepository.findAll(Transaction.sortById());
+        List<Transaction> transactions = transactionRepository.findAll(sortById());
         return converter.convert(transactions);
     }
 
