@@ -42,6 +42,7 @@ public class AccountStatementServiceImpl implements AccountStatementService {
      */
     @Override
     public List<AccountStatement> fetchLastSixMonthsAccountStatement() {
+        logger.info("Fetching last six months account statements");
         final LocalDateTime startDate = firstDayOfMonthBefore(6);
         List<Transaction> transactions = transactionRepository.findTransactionsAfterDate(startDate, sortById());
         return converter.convert(transactions);
@@ -54,6 +55,7 @@ public class AccountStatementServiceImpl implements AccountStatementService {
      */
     @Override
     public List<AccountStatement> fetchAllAccountStatement() {
+        logger.info("Fetching all account statements");
         List<Transaction> transactions = transactionRepository.findAll(sortById());
         return converter.convert(transactions);
     }
