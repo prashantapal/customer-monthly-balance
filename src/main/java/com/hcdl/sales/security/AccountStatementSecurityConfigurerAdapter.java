@@ -41,7 +41,7 @@ public class AccountStatementSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         UserDetails user = User.builder().username("test_user").password(passwordEncoder().encode("userpassword")).roles("USER").build();
         UserDetails test = User.builder().username("test").password(passwordEncoder().encode("testpassword")).roles("USER").build();
-        UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("adminpassword")).roles("USER", "ADMIN").build();
+        UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("admin")).roles("USER", "ADMIN").build();
         return new InMemoryUserDetailsManager(user, test, admin);
     }
 
