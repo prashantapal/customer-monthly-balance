@@ -22,6 +22,7 @@ import java.util.List;
 
 import static com.hcdl.sales.model.TransactionType.CREDIT;
 import static com.hcdl.sales.model.TransactionType.DEBIT;
+import static java.math.BigDecimal.ZERO;
 import static java.time.LocalDateTime.now;
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.util.Arrays.asList;
@@ -76,7 +77,7 @@ public class AccountStatementServiceImplTest {
 
                 accountStatement3 -> assertAccountStatement(accountStatement3,
                         LocalDate.now().minusYears(3).with(firstDayOfMonth()), 1, new BigDecimal(300),
-                        BigDecimal.ZERO, new BigDecimal(300), new BigDecimal(150))
+                        ZERO, new BigDecimal(300), new BigDecimal(150))
         );
         assertAccountTransaction(accountStatements.get(0).getTransactions().get(0), 1L, "test_description_1", new BigDecimal(100), CREDIT);
         assertAccountTransaction(accountStatements.get(0).getTransactions().get(1), 2L, "test_description_2", new BigDecimal(300), DEBIT);

@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static com.hcdl.sales.model.TransactionType.CREDIT;
 import static com.hcdl.sales.model.TransactionType.DEBIT;
+import static java.math.BigDecimal.ZERO;
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
@@ -49,7 +50,7 @@ public class AccountStatementConverter {
     private List<AccountStatement> monthlyAccountStatement(LinkedHashMap<LocalDate, List<AccountTransaction>> monthlyGroupedTransaction) {
         List<AccountStatement> accountStatements = new ArrayList<>();
         AtomicReference<BigDecimal> cumulativeBalance = new AtomicReference<>();
-        cumulativeBalance.set(BigDecimal.ZERO);
+        cumulativeBalance.set(ZERO);
         // The simple for loop maintains the stateful operation of the cumulative balance
         for (Map.Entry<LocalDate, List<AccountTransaction>> entry : monthlyGroupedTransaction.entrySet()) {
             accountStatements.add(getAccountStatement(entry.getKey(), entry.getValue(), cumulativeBalance));
