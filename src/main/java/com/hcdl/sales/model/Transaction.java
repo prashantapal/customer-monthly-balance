@@ -1,9 +1,8 @@
 package com.hcdl.sales.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.domain.Sort;
 
 import javax.persistence.Column;
@@ -21,8 +20,7 @@ import java.time.LocalDateTime;
 @Table(name = "TRANSACTION")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class Transaction {
 
     @Id
