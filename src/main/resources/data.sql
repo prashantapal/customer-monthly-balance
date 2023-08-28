@@ -8,16 +8,15 @@ insert into transaction (description, transaction_date, transaction_amount, tran
 
 insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Salary credited XXX2436757', now() - 65 day, 7000.00, 'CREDIT');
 insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to Jack XXX245657', now() - 64 day, 2443.34, 'DEBIT');
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to John XXX243657', now() - 63 day, 1355.57, 'DEBIT');
 
+insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to John XXX133557', now() - 93 day, 1355.57, 'DEBIT');
+insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to John XXX134657', now() - 94 day, 3000.00, 'DEBIT');
+insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to Jack XXX135657', now() - 95 day, 1000.00, 'DEBIT');
+insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Salary credited XXX1336757', now() - 96 day, 7000.00, 'CREDIT');
 
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to John XXX133657', now() - 7 month, 3000.00, 'DEBIT');
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to Jack XXX135657', now() - 7 month, 1000.00, 'DEBIT');
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Salary credited XXX1336757', now() - 7 month, 7000.00, 'CREDIT');
-
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to Jack XXX133557', now() - 8 month, 1000.00, 'DEBIT');
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to John XXX135557', now() - 8 month, 4000.00, 'DEBIT');
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Salary credited XXX1336557', now() - 8 month, 7000.00, 'CREDIT');
+insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to Jack XXX133557', now() - 5 month, 1000.00, 'DEBIT');
+insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to John XXX135557', now() - 5 month, 4000.00, 'DEBIT');
+insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Salary credited XXX1336557', now() - 5 month, 7000.00, 'CREDIT');
 
 insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to John XXX133537', now() - 9 month, 5000.00, 'DEBIT');
 insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to Jack XXX135537', now() - 9 month, 1000.00, 'DEBIT');
