@@ -1,12 +1,12 @@
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to John XXX533657', now() - 3 hour, 1000.00, 'DEBIT');
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to Jack XXX535657', now() - 1 hour, 3000.00, 'DEBIT');
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Salary credited XXX5336757', now(), 7000.00, 'CREDIT');
+insert into transaction (transaction_id, description, transaction_date, transaction_amount, transaction_type) values(100, 'test_description_100', now() - 3 hour, 1000.00, 'DEBIT');
+insert into transaction (transaction_id, description, transaction_date, transaction_amount, transaction_type) values(101, 'test_description_101', now() - 1 hour, 3000.00, 'DEBIT');
+insert into transaction (transaction_id, description, transaction_date, transaction_amount, transaction_type) values(102, 'test_description_102', now(), 7000.00, 'CREDIT');
 
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Salary credited XXX2436757', now() - 3 month, 7000.00, 'CREDIT');
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to Jack XXX245657', now() - 3 month, 1000.00, 'DEBIT');
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to John XXX243657', now() - 3 month, 2000.00, 'DEBIT');
+insert into transaction (transaction_id, description, transaction_date, transaction_amount, transaction_type) values(103, 'test_description_103', now() - 3 month, 7000.00, 'CREDIT');
+insert into transaction (transaction_id, description, transaction_date, transaction_amount, transaction_type) values(104, 'test_description_104', now() - 3 month, 1000.00, 'DEBIT');
+insert into transaction (transaction_id, description, transaction_date, transaction_amount, transaction_type) values(105, 'test_description_105', now() - 3 month, 2000.00, 'DEBIT');
 
 
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to John XXX133657', now() - 7 month, 3000.00, 'DEBIT');
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Transfer to Jack XXX135657', now() - 7 month, 4000.00, 'DEBIT');
-insert into transaction (description, transaction_date, transaction_amount, transaction_type) values('Salary credited XXX1336757', now() - 7 month, 7000.00, 'CREDIT');
+insert into transaction (transaction_id, description, transaction_date, transaction_amount, transaction_type) values(106, 'test_description_106', now() - 7 month, 3000.00, 'DEBIT');
+insert into transaction (transaction_id, description, transaction_date, transaction_amount, transaction_type) values(107, 'test_description_107', now() - 7 month, 4000.00, 'DEBIT');
+insert into transaction (transaction_id, description, transaction_date, transaction_amount, transaction_type) values(108, 'test_description_108', now() - 7 month, 7000.00, 'CREDIT');

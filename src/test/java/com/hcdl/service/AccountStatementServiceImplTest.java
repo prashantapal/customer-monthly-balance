@@ -24,6 +24,7 @@ import static com.hcdl.sales.model.TransactionType.CREDIT;
 import static com.hcdl.sales.model.TransactionType.DEBIT;
 import static java.math.BigDecimal.ZERO;
 import static java.time.LocalDateTime.now;
+import static java.time.LocalTime.MIDNIGHT;
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,9 +57,9 @@ public class AccountStatementServiceImplTest {
                 LocalDate.now().with(firstDayOfMonth()), 3, new BigDecimal(400),
                 new BigDecimal(300), new BigDecimal(100), new BigDecimal(100))
         );
-        assertAccountTransaction(accountStatements.get(0).getTransactions().get(0), 1L, "test_description_1", new BigDecimal(100), CREDIT);
-        assertAccountTransaction(accountStatements.get(0).getTransactions().get(1), 2L, "test_description_2", new BigDecimal(300), DEBIT);
-        assertAccountTransaction(accountStatements.get(0).getTransactions().get(2), 3L, "test_description_3", new BigDecimal(300), CREDIT);
+        assertAccountTransaction(accountStatements.get(0).getTransactions().get(0), 1L, "test_description_1", LocalDate.now(), new BigDecimal(100), CREDIT);
+        assertAccountTransaction(accountStatements.get(0).getTransactions().get(1), 2L, "test_description_2", LocalDate.now(), new BigDecimal(300), DEBIT);
+        assertAccountTransaction(accountStatements.get(0).getTransactions().get(2), 3L, "test_description_3", LocalDate.now(), new BigDecimal(300), CREDIT);
     }
 
     @Test
@@ -76,12 +77,20 @@ public class AccountStatementServiceImplTest {
                         new BigDecimal(800), new BigDecimal(250).negate(), new BigDecimal(150).negate()),
 
                 accountStatement3 -> assertAccountStatement(accountStatement3,
-                        LocalDate.now().minusYears(3).with(firstDayOfMonth()), 1, new BigDecimal(300),
-                        ZERO, new BigDecimal(300), new BigDecimal(150))
+                        LocalDate.now().minusYears(3).with(firstDayOfMonth()), 1, new BigDecimal(700),
+                        ZERO, new BigDecimal(700), new BigDecimal(550))
         );
-        assertAccountTransaction(accountStatements.get(0).getTransactions().get(0), 1L, "test_description_1", new BigDecimal(100), CREDIT);
-        assertAccountTransaction(accountStatements.get(0).getTransactions().get(1), 2L, "test_description_2", new BigDecimal(300), DEBIT);
-        assertAccountTransaction(accountStatements.get(0).getTransactions().get(2), 3L, "test_description_3", new BigDecimal(300), CREDIT);
+        assertAccountTransaction(accountStatements.get(0).getTransactions().get(0), 1L, "test_description_1", LocalDate.now(), new BigDecimal(100), CREDIT);
+        assertAccountTransaction(accountStatements.get(0).getTransactions().get(1), 2L, "test_description_2", LocalDate.now(), new BigDecimal(300), DEBIT);
+        assertAccountTransaction(accountStatements.get(0).getTransactions().get(2), 3L, "test_description_3", LocalDate.now(), new BigDecimal(300), CREDIT);
+
+        assertAccountTransaction(accountStatements.get(1).getTransactions().get(0), 4L, "test_description_4", LocalDate.now().minusYears(1), new BigDecimal(550), CREDIT);
+        assertAccountTransaction(accountStatements.get(1).getTransactions().get(1), 5L, "test_description_5", LocalDate.now().minusYears(1), new BigDecimal(300), DEBIT);
+        assertAccountTransaction(accountStatements.get(1).getTransactions().get(2), 6L, "test_description_6", LocalDate.now().minusYears(1), new BigDecimal(500), DEBIT);
+
+        assertAccountTransaction(accountStatements.get(2).getTransactions().get(0), 7L, "test_description_7", LocalDate.now().minusYears(3), new BigDecimal(700), CREDIT);
+
+
     }
 
     private void assertAccountStatement(AccountStatement actualStatement, LocalDate expectedDate, int expectedTransactionCount,
@@ -99,11 +108,12 @@ public class AccountStatementServiceImplTest {
     }
 
     private void assertAccountTransaction(AccountTransaction actualTransaction, long expectedId, String expectedDescription,
-                                          BigDecimal expectedAmount, TransactionType expectedType) {
+                                          LocalDate expectedTransactionDate, BigDecimal expectedAmount, TransactionType expectedType) {
         assertAll(
                 "Assert account transaction",
                 () -> assertThat(actualTransaction.getTransactionId()).isEqualTo(expectedId),
                 () -> assertThat(actualTransaction.getTransactionDescription()).isEqualTo(expectedDescription),
+                () -> assertThat(actualTransaction.getTransactionDate().toLocalDate()).isEqualTo(expectedTransactionDate),
                 () -> assertThat(actualTransaction.getTransactionAmount()).isEqualTo(expectedAmount),
                 () -> assertThat(actualTransaction.getTransactionType()).isEqualTo(expectedType)
         );
@@ -111,9 +121,9 @@ public class AccountStatementServiceImplTest {
 
     private List<Transaction> createLastSixMonthsTransactions() {
         return asList(
-                new Transaction(1L, "test_description_1", now(), new BigDecimal(100), CREDIT),
-                new Transaction(2L, "test_description_2", now(), new BigDecimal(300), DEBIT),
-                new Transaction(3L, "test_description_3", now(), new BigDecimal(300), CREDIT)
+                new Transaction(1L, "test_description_1", resetTimeStampToMidnight(now()), new BigDecimal(100), CREDIT),
+                new Transaction(2L, "test_description_2", resetTimeStampToMidnight(now()), new BigDecimal(300), DEBIT),
+                new Transaction(3L, "test_description_3", resetTimeStampToMidnight(now()), new BigDecimal(300), CREDIT)
         );
     }
 
@@ -121,11 +131,15 @@ public class AccountStatementServiceImplTest {
         List<Transaction> transactions = new ArrayList<>();
         transactions.addAll(createLastSixMonthsTransactions());
         transactions.addAll(asList(
-                new Transaction(4L, "test_description_3", now().minusYears(1), new BigDecimal(550), CREDIT),
-                new Transaction(5L, "test_description_3", now().minusYears(1), new BigDecimal(300), DEBIT),
-                new Transaction(6L, "test_description_3", now().minusYears(1), new BigDecimal(500), DEBIT),
-                new Transaction(7L, "test_description_3", now().minusYears(3), new BigDecimal(300), CREDIT)
+                new Transaction(4L, "test_description_4", resetTimeStampToMidnight(now().minusYears(1)), new BigDecimal(550), CREDIT),
+                new Transaction(5L, "test_description_5", resetTimeStampToMidnight(now().minusYears(1)), new BigDecimal(300), DEBIT),
+                new Transaction(6L, "test_description_6", resetTimeStampToMidnight(now().minusYears(1)), new BigDecimal(500), DEBIT),
+                new Transaction(7L, "test_description_7", resetTimeStampToMidnight(now().minusYears(3)), new BigDecimal(700), CREDIT)
         ));
         return transactions;
+    }
+
+    private LocalDateTime resetTimeStampToMidnight(LocalDateTime localDateTime) {
+        return localDateTime.toLocalDate().atTime(MIDNIGHT);
     }
 }
