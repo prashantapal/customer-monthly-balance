@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>com.hcdl.sales</groupId>
-    <artifactId>customer-monthly-balance</artifactId>
+    <artifactId>customer-monthly-balance-rest</artifactId>
     <version>master-SNAPSHOT</version>
     <packaging>jar</packaging>
 
