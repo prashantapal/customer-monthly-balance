@@ -21,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.hcdl.sales.model.TransactionType.DEBIT;
@@ -108,8 +109,8 @@ public class AccountStatementControllerIntegrationTest {
 
     private void assertLastSixMonthTransactions(MvcResult result) throws Exception {
         List<AccountStatement> statements = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<AccountStatement>>() {});
-        assertAccountTransaction(statements.get(0).getTransactions().get(0), 100L, "test_description_100", LocalDate.now(), new BigDecimal("1000.00"), DEBIT);
-        assertAccountTransaction(statements.get(0).getTransactions().get(1), 101L, "test_description_101", LocalDate.now(), new BigDecimal("3000.00"), DEBIT);
+        assertAccountTransaction(statements.get(0).getTransactions().get(0), 100L, "test_description_100", LocalDateTime.now().minusHours(3).toLocalDate(), new BigDecimal("1000.00"), DEBIT);
+        assertAccountTransaction(statements.get(0).getTransactions().get(1), 101L, "test_description_101", LocalDateTime.now().minusHours(1).toLocalDate(), new BigDecimal("3000.00"), DEBIT);
         assertAccountTransaction(statements.get(0).getTransactions().get(2), 102L, "test_description_102", LocalDate.now(), new BigDecimal("7000.00"), CREDIT);
         assertAccountTransaction(statements.get(1).getTransactions().get(0), 103L, "test_description_103", LocalDate.now().minusMonths(3), new BigDecimal("7000.00"), CREDIT);
         assertAccountTransaction(statements.get(1).getTransactions().get(1), 104L, "test_description_104", LocalDate.now().minusMonths(3), new BigDecimal("1000.00"), DEBIT);
