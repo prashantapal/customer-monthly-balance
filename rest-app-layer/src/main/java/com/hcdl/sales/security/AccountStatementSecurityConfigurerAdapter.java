@@ -12,6 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
 @Configuration
 @EnableWebSecurity
@@ -33,8 +39,22 @@ public class AccountStatementSecurityConfigurerAdapter {
                 .and()
                 .httpBasic().authenticationEntryPoint(accountServiceAuthenticationEntryPoint);
         http.csrf().disable();
+        http.cors();
         http.headers().frameOptions().disable();
         return http.build();
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        //  config.setAllowedOriginPatterns(asList("http://localhost:9355"));
+        config.setAllowedOriginPatterns(singletonList("*")); // Not recommended for production use
+        config.setAllowedHeaders(asList("Origin", "Content-Type", "Accept", "responseType", "Authorization"));
+        config.setAllowedMethods(asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 
     @Bean

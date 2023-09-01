@@ -2,7 +2,7 @@ package com.hcdl.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hcdl.sales.CustomerMonthlyRestBalanceApplication;
+import com.hcdl.sales.CustomerMonthlyBalanceRestApplication;
 import com.hcdl.sales.model.TransactionType;
 import com.hcdl.sales.model.domain.AccountStatement;
 import com.hcdl.sales.model.domain.AccountTransaction;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import static com.hcdl.sales.model.TransactionType.CREDIT;
 
-@SpringBootTest(classes = CustomerMonthlyRestBalanceApplication.class)
+@SpringBootTest(classes = CustomerMonthlyBalanceRestApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
 @Sql({"/schema.sql", "/data.sql"})
 public class AccountStatementControllerIntegrationTest {
