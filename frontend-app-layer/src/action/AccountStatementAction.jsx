@@ -1,5 +1,6 @@
-import {useEffect, useRef, useState} from 'react'
-import {Oval} from 'react-loader-spinner'
+import { useEffect, useRef, useState } from 'react'
+import _ from 'lodash'
+import { Oval } from 'react-loader-spinner'
 import api from '../api/AccountStatementApi'
 import AccountStatementView from "../view/AccountStatementView"
 import '../style/AccountStatement.css'
@@ -14,13 +15,11 @@ const AccountStatementAction = () => {
   useEffect(() => {
     if (count.current !== 0) {
       api.fetchAccountStatements().then(response => {
-        console.log(response.data)
-        setAccountStatements(response.data)
+        setAccountStatements(_.orderBy(response.data, "month", "desc"))
         setLoading(false)
         setAuthError(false)
         setError(false)
       }).catch(error => {
-        console.log(error)
         setLoading(false)
         if (error.response && error.response.status === 401) {
           setAuthError(true)

@@ -9,16 +9,17 @@
     height: 100vh;
 }
 
-table, td, tr {
-    padding: 3px 25px;
+table.transaction, table.transaction th, table.transaction tr, table.transaction td {
+    padding: 5px 10px;
     font-size: 13px;
     font-family: Serif;
     border: 1px solid black;
     border-collapse: collapse;
+    text-align: center;
 }
 
 .credit {
-    color: #07b80f;
+    color: #037c09;
 }
 
 .debit {

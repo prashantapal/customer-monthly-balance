@@ -2,77 +2,53 @@ import React from 'react'
 import Table from 'react-bootstrap/Table'
 import moment from "moment"
 
-const AccountStatementView = ({ accountStatements }) =>(
+const AccountStatementView = ({ accountStatements }) => (
   <div className="centered centered-height">
-    <Table>
-      {accountStatements.map((eachMonthStatement, index) =>
-        <tbody key={moment(eachMonthStatement.month).format("YYYYMMDD")}>
-        <tr>
-          <td>{monthlyStatement(eachMonthStatement, index === 0)}</td>
-        </tr>
-        </tbody>
-      )}
-    </Table>
-  </div>
-)
-
-const monthlyStatement = (eachMonthStatement, showTableHeader) => (
-  <Table className="monthly-statement">
-    <tbody>
-    <tr>
-      <td>{monthlyTransactions(eachMonthStatement, showTableHeader)}</td>
-    </tr>
-    </tbody>
-  </Table>
-)
-
-const MonthlyClosingBalance = ({ eachMonthStatement }) => (
-  <>
-    <Table className="monthly-balance">
-      <tbody>
-      <tr>
-        <td>{moment(eachMonthStatement.month).format("MMMM, YYYY")}  Total credit: {eachMonthStatement.totalCredit.toFixed(2)}   Total debit: {eachMonthStatement.totalDebit.toFixed(2)}   Closing balance: {eachMonthStatement.balance.toFixed(2)}</td>
-        <td>{eachMonthStatement.cumulativeBalance.toFixed(2)}</td>
-      </tr>
-      </tbody>
-    </Table>
-  </>
-)
-
-const monthlyTransactions = (eachMonthStatement, showTableHeader) => (
-  <>
     <Table className="transaction">
-      {showTableHeader &&
-        <thead>
+      <thead>
         <tr>
+          <th>Month</th>
           <th>Transaction Date</th>
           <th>Transaction Id</th>
           <th>Description</th>
           <th>Amount</th>
+          <th>Total Monthly Credit</th>
+          <th>Total Monthly Debit</th>
+          <th>Monthly Closing Balance</th>
           <th>Closing Balance(Cumulative)</th>
         </tr>
-        </thead>
-      }
+      </thead>
       <tbody>
-      {eachMonthStatement.transactions.map((transaction, index) =>
-        <Transaction key={transaction.transactionId} index={index}
-                     numberOfTransactions={eachMonthStatement.transactions.length}
-                     transaction={transaction}
-                     monthlyCumulativeBalance={eachMonthStatement.cumulativeBalance}/>)}
+        {accountStatements.map(accountStatement => monthlyStatement(accountStatement))}
       </tbody>
     </Table>
-  </>
+  </div>
 )
 
-const Transaction = ({index, numberOfTransactions, transaction, monthlyCumulativeBalance}) => {
+const monthlyStatement = (accountStatement) => (
+  accountStatement.transactions.map(
+    (transaction, index) =>
+      <Transaction key={transaction.transactionId} index={index}
+                   transaction={transaction}
+                   accountStatement={accountStatement} />
+  )
+)
+
+const Transaction = ({index, transaction, accountStatement}) => {
   const {transactionId, transactionDate, transactionDescription, transactionType, transactionAmount} = transaction
+  const {month, totalCredit, totalDebit, balance, cumulativeBalance} = accountStatement
+  const noOfRowsGrouped = accountStatement.transactions.length
   return (
     <tr>
+      {index === 0 && <td rowSpan={noOfRowsGrouped}>{moment(month).format("MMMM, YYYY")}</td>}
       <td>{moment(transactionDate).format("DD.MM.YYYY HH:mm:ss")}</td>
       <td>{transactionId}</td>
       <td>{transactionDescription}</td>
       <td><TransactionAmount {...{transactionType, transactionAmount}}/></td>
-      {index === 0 && <td rowSpan={numberOfTransactions}>{monthlyCumulativeBalance.toFixed(2)}</td>}
+      {index === 0 && <td rowSpan={noOfRowsGrouped}>{totalCredit.toFixed(2)}</td>}
+      {index === 0 && <td rowSpan={noOfRowsGrouped}>{totalDebit.toFixed(2)}</td>}
+      {index === 0 && <td rowSpan={noOfRowsGrouped}>{balance.toFixed(2)}</td>}
+      {index === 0 && <td rowSpan={noOfRowsGrouped}>{cumulativeBalance.toFixed(2)}</td>}
     </tr>
   )
 }
