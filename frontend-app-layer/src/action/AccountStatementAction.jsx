@@ -1,30 +1,35 @@
-import { useEffect, useState } from 'react';
-import { Oval } from 'react-loader-spinner';
+import {useEffect, useRef, useState} from 'react';
+import {Oval} from 'react-loader-spinner';
 import api from '../api/AccountStatementApi';
 import AccountStatementView from "../view/AccountStatementView";
+import '../style/AccountStatement.css';
 
 const AccountStatementAction = () => {
+  const count = useRef(0);
   const [isLoading, setLoading] = useState(true);
   const [isAuthError, setAuthError] = useState(false);
   const [isError, setError] = useState(false);
   const [accountStatements, setAccountStatements] = useState([]);
 
   useEffect(() => {
-    api.fetchAccountStatements().then(response => {
-      console.log(response.data)
-      setAccountStatements(response.data)
-      setLoading(false)
-      setAuthError(false)
-      setError(false)
-    }).catch(error => {
-      console.log(error)
-      setLoading(false)
-      if (error.response && error.response.status === 401) {
-        setAuthError(true)
-      } else {
-        setError(true)
-      }
-    })
+    if (count.current !== 0) {
+      api.fetchAccountStatements().then(response => {
+        console.log(response.data)
+        setAccountStatements(response.data)
+        setLoading(false)
+        setAuthError(false)
+        setError(false)
+      }).catch(error => {
+        console.log(error)
+        setLoading(false)
+        if (error.response && error.response.status === 401) {
+          setAuthError(true)
+        } else {
+          setError(true)
+        }
+      })
+    }
+    count.current++;
   }, []);
 
   if (isLoading) {
@@ -39,7 +44,7 @@ const AccountStatementAction = () => {
 }
 
 const Loading = () => (
-  <div className="App">
+  <div className="spinner">
     <Oval
       ariaLabel="loading-indicator"
       height={80}
