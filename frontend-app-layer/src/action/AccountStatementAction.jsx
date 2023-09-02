@@ -14,9 +14,12 @@ const AccountStatementAction = () => {
       console.log(response.data)
       setAccountStatements(response.data)
       setLoading(false)
+      setAuthError(false)
+      setError(false)
     }).catch(error => {
       console.log(error)
-      if (error.response.status == 401) {
+      setLoading(false)
+      if (error.response && error.response.status === 401) {
         setAuthError(true)
       } else {
         setError(true)
