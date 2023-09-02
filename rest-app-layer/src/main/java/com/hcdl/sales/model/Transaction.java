@@ -27,6 +27,8 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TRANSACTION_ID")
     private Long id;
+    @Column(name = "USER_NAME", nullable = false)
+    private String userName;
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
     @Column(name = "TRANSACTION_DATE", nullable = false)

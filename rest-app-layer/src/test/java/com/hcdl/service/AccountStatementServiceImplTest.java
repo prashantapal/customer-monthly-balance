@@ -30,6 +30,7 @@ import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -49,9 +50,9 @@ public class AccountStatementServiceImplTest {
 
     @Test
     public void shouldReturnLastSixMonthsAccountStatements() {
-        given(transactionRepository.findTransactionsAfterDate(any(LocalDateTime.class), any(Sort.class)))
+        given(transactionRepository.findTransactionsAfterDate(anyString(), any(LocalDateTime.class), any(Sort.class)))
                 .willReturn(createLastSixMonthsTransactions());
-        List<AccountStatement> accountStatements = accountStatementService.fetchLastSixMonthsAccountStatement();
+        List<AccountStatement> accountStatements = accountStatementService.fetchLastSixMonthsAccountStatement("test");
         assertThat(accountStatements).hasSize(1);
         assertThat(accountStatements).satisfiesExactly(accountStatement -> assertAccountStatement(accountStatement,
                 LocalDate.now().with(firstDayOfMonth()), 3, new BigDecimal(400),
@@ -64,9 +65,9 @@ public class AccountStatementServiceImplTest {
 
     @Test
     public void shouldReturnAllAccountStatements() {
-        given(transactionRepository.findAll(any(Sort.class)))
+        given(transactionRepository.findAllTransactions(anyString(), any(Sort.class)))
                 .willReturn(createAllTransactions());
-        List<AccountStatement> accountStatements = accountStatementService.fetchAllAccountStatement();
+        List<AccountStatement> accountStatements = accountStatementService.fetchAllAccountStatement("test");
         assertThat(accountStatements).hasSize(3);
         assertThat(accountStatements).satisfiesExactly(
                 accountStatement1 -> assertAccountStatement(accountStatement1,
@@ -122,19 +123,19 @@ public class AccountStatementServiceImplTest {
 
     private List<Transaction> createLastSixMonthsTransactions() {
         return asList(
-                new Transaction(5L, "test_description_5", resetTimeStampToMidnight(now()), new BigDecimal(100), CREDIT),
-                new Transaction(6L, "test_description_6", resetTimeStampToMidnight(now()), new BigDecimal(300), DEBIT),
-                new Transaction(7L, "test_description_7", resetTimeStampToMidnight(now()), new BigDecimal(300), CREDIT)
+                new Transaction(5L, "test", "test_description_5", resetTimeStampToMidnight(now()), new BigDecimal(100), CREDIT),
+                new Transaction(6L, "test", "test_description_6", resetTimeStampToMidnight(now()), new BigDecimal(300), DEBIT),
+                new Transaction(7L, "test", "test_description_7", resetTimeStampToMidnight(now()), new BigDecimal(300), CREDIT)
         );
     }
 
     private List<Transaction> createAllTransactions() {
         List<Transaction> transactions = new ArrayList<>();
         transactions.addAll(asList(
-                new Transaction(1L, "test_description_1", resetTimeStampToMidnight(now().minusYears(3)), new BigDecimal(700), CREDIT),
-                new Transaction(2L, "test_description_2", resetTimeStampToMidnight(now().minusYears(1)), new BigDecimal(550), CREDIT),
-                new Transaction(3L, "test_description_3", resetTimeStampToMidnight(now().minusYears(1)), new BigDecimal(300), DEBIT),
-                new Transaction(4L, "test_description_4", resetTimeStampToMidnight(now().minusYears(1)), new BigDecimal(500), DEBIT)
+                new Transaction(1L, "test", "test_description_1", resetTimeStampToMidnight(now().minusYears(3)), new BigDecimal(700), CREDIT),
+                new Transaction(2L, "test", "test_description_2", resetTimeStampToMidnight(now().minusYears(1)), new BigDecimal(550), CREDIT),
+                new Transaction(3L, "test", "test_description_3", resetTimeStampToMidnight(now().minusYears(1)), new BigDecimal(300), DEBIT),
+                new Transaction(4L, "test", "test_description_4", resetTimeStampToMidnight(now().minusYears(1)), new BigDecimal(500), DEBIT)
         ));
         transactions.addAll(createLastSixMonthsTransactions());
         return transactions;

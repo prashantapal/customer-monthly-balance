@@ -41,10 +41,10 @@ public class AccountStatementServiceImpl implements AccountStatementService {
      * (The date range is starting from the first day of the month(i.e. current date - 6 months) to till date)
      */
     @Override
-    public List<AccountStatement> fetchLastSixMonthsAccountStatement() {
+    public List<AccountStatement> fetchLastSixMonthsAccountStatement(String userName) {
         logger.info("Fetching last six months account statements");
         final LocalDateTime startDate = firstDayOfMonthBefore(6);
-        List<Transaction> transactions = transactionRepository.findTransactionsAfterDate(startDate, sortById());
+        List<Transaction> transactions = transactionRepository.findTransactionsAfterDate(userName, startDate, sortById());
         return converter.convert(transactions);
     }
 
@@ -54,9 +54,9 @@ public class AccountStatementServiceImpl implements AccountStatementService {
      * purpose.
      */
     @Override
-    public List<AccountStatement> fetchAllAccountStatement() {
+    public List<AccountStatement> fetchAllAccountStatement(String userName) {
         logger.info("Fetching all account statements");
-        List<Transaction> transactions = transactionRepository.findAll(sortById());
+        List<Transaction> transactions = transactionRepository.findAllTransactions(userName, sortById());
         return converter.convert(transactions);
     }
 

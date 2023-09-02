@@ -13,6 +13,9 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    @Query(value = "select t from Transaction t where t.date >= :transactionDate")
-    List<Transaction> findTransactionsAfterDate(@Param("transactionDate") LocalDateTime transactionDate, Sort sort);
+    @Query(value = "select t from Transaction t where t.userName = :userName and t.date >= :transactionDate")
+    List<Transaction> findTransactionsAfterDate(@Param("userName") String userName, @Param("transactionDate") LocalDateTime transactionDate, Sort sort);
+
+    @Query(value = "select t from Transaction t where t.userName = :userName")
+    List<Transaction> findAllTransactions(@Param("userName") String userName, Sort sort);
 }

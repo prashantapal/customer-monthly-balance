@@ -15,6 +15,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -24,17 +25,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.hcdl.sales.model.TransactionType.CREDIT;
 import static com.hcdl.sales.model.TransactionType.DEBIT;
 import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import static com.hcdl.sales.model.TransactionType.CREDIT;
 
 @SpringBootTest(classes = CustomerMonthlyBalanceRestApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -52,14 +54,16 @@ public class AccountStatementControllerIntegrationTest {
 
     @BeforeEach
     public void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
     }
 
     @Test
     public void testShouldReturnLastSixMonthsAccountStatements() throws Exception {
         String currentMonthFirstDay = LocalDate.now().with(firstDayOfMonth()).toString();
         String beforeThreeMonthsFirstDay = LocalDate.now().minusMonths(3).with(firstDayOfMonth()).toString();
-        MvcResult result = mockMvc.perform(get("/account-statement"))
+        MvcResult result = mockMvc.perform(get("/account-statement").with(test()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].month").value(beforeThreeMonthsFirstDay))
@@ -81,7 +85,7 @@ public class AccountStatementControllerIntegrationTest {
     @Test
     public void testShouldReturnEmptyAccountStatements() throws Exception {
         repository.deleteAll();
-        mockMvc.perform(get("/account-statement"))
+        mockMvc.perform(get("/account-statement").with(test()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", empty()));
     }
@@ -91,7 +95,7 @@ public class AccountStatementControllerIntegrationTest {
         String currentMonthFirstDay = LocalDate.now().with(firstDayOfMonth()).toString();
         String beforeThreeMonthsFirstDay = LocalDate.now().minusMonths(3).with(firstDayOfMonth()).toString();
         String beforeSevenMonthsFirstDay = LocalDate.now().minusMonths(7).with(firstDayOfMonth()).toString();
-        MvcResult result = mockMvc.perform(get("/account-statement/all"))
+        MvcResult result = mockMvc.perform(get("/account-statement/all").with(test()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].month").value(beforeSevenMonthsFirstDay))
@@ -146,5 +150,9 @@ public class AccountStatementControllerIntegrationTest {
 
     private void assertAccountTransaction(MvcResult result) throws UnsupportedEncodingException {
         System.out.println(result.getResponse().getContentAsString());
+    }
+
+    public static RequestPostProcessor test() {
+        return user("test").roles("USER");
     }
 }

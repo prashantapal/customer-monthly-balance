@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface AccountStatementService {
 
-    List<AccountStatement> fetchLastSixMonthsAccountStatement();
-    List<AccountStatement> fetchAllAccountStatement();
+    List<AccountStatement> fetchLastSixMonthsAccountStatement(String userName);
+    List<AccountStatement> fetchAllAccountStatement(String userName);
 }
