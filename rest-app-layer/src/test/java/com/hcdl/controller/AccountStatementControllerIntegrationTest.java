@@ -58,21 +58,21 @@ public class AccountStatementControllerIntegrationTest {
     @Test
     public void testShouldReturnLastSixMonthsAccountStatements() throws Exception {
         String currentMonthFirstDay = LocalDate.now().with(firstDayOfMonth()).toString();
-        String lastMonthFirstDay = LocalDate.now().minusMonths(3).with(firstDayOfMonth()).toString();
+        String beforeThreeMonthsFirstDay = LocalDate.now().minusMonths(3).with(firstDayOfMonth()).toString();
         MvcResult result = mockMvc.perform(get("/account-statement"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].month").value(currentMonthFirstDay))
+                .andExpect(jsonPath("$[0].month").value(beforeThreeMonthsFirstDay))
                 .andExpect(jsonPath("$[0].transactions", hasSize(3)))
                 .andExpect(jsonPath("$[0].totalCredit").value(7000))
-                .andExpect(jsonPath("$[0].totalDebit").value(4000))
-                .andExpect(jsonPath("$[0].balance").value(3000))
-                .andExpect(jsonPath("$[0].cumulativeBalance").value(3000))
-                .andExpect(jsonPath("$[1].month").value(lastMonthFirstDay))
+                .andExpect(jsonPath("$[0].totalDebit").value(3000))
+                .andExpect(jsonPath("$[0].balance").value(4000))
+                .andExpect(jsonPath("$[0].cumulativeBalance").value(4000))
+                .andExpect(jsonPath("$[1].month").value(currentMonthFirstDay))
                 .andExpect(jsonPath("$[1].transactions", hasSize(3)))
                 .andExpect(jsonPath("$[1].totalCredit").value(7000))
-                .andExpect(jsonPath("$[1].totalDebit").value(3000))
-                .andExpect(jsonPath("$[1].balance").value(4000))
+                .andExpect(jsonPath("$[1].totalDebit").value(4000))
+                .andExpect(jsonPath("$[1].balance").value(3000))
                 .andExpect(jsonPath("$[1].cumulativeBalance").value(7000))
                 .andReturn();
         assertLastSixMonthTransactions(result);
@@ -89,19 +89,19 @@ public class AccountStatementControllerIntegrationTest {
     @Test
     public void testShouldReturnAllAccountStatements() throws Exception {
         String currentMonthFirstDay = LocalDate.now().with(firstDayOfMonth()).toString();
-        String lastMonthFirstDay = LocalDate.now().minusMonths(3).with(firstDayOfMonth()).toString();
+        String beforeThreeMonthsFirstDay = LocalDate.now().minusMonths(3).with(firstDayOfMonth()).toString();
         String beforeSevenMonthsFirstDay = LocalDate.now().minusMonths(7).with(firstDayOfMonth()).toString();
         MvcResult result = mockMvc.perform(get("/account-statement/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(jsonPath("$[0].month").value(currentMonthFirstDay))
-                .andExpect(jsonPath("$[0].balance").value(3000))
-                .andExpect(jsonPath("$[0].cumulativeBalance").value(3000))
-                .andExpect(jsonPath("$[1].month").value(lastMonthFirstDay))
+                .andExpect(jsonPath("$[0].month").value(beforeSevenMonthsFirstDay))
+                .andExpect(jsonPath("$[0].balance").value(0))
+                .andExpect(jsonPath("$[0].cumulativeBalance").value(0))
+                .andExpect(jsonPath("$[1].month").value(beforeThreeMonthsFirstDay))
                 .andExpect(jsonPath("$[1].balance").value(4000))
-                .andExpect(jsonPath("$[1].cumulativeBalance").value(7000))
-                .andExpect(jsonPath("$[2].month").value(beforeSevenMonthsFirstDay))
-                .andExpect(jsonPath("$[2].balance").value(0))
+                .andExpect(jsonPath("$[1].cumulativeBalance").value(4000))
+                .andExpect(jsonPath("$[2].month").value(currentMonthFirstDay))
+                .andExpect(jsonPath("$[2].balance").value(3000))
                 .andExpect(jsonPath("$[2].cumulativeBalance").value(7000))
                 .andReturn();
         assertAllTransactions(result);
@@ -109,21 +109,26 @@ public class AccountStatementControllerIntegrationTest {
 
     private void assertLastSixMonthTransactions(MvcResult result) throws Exception {
         List<AccountStatement> statements = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<AccountStatement>>() {});
-        assertAccountTransaction(statements.get(0).getTransactions().get(0), 100L, "test_description_100", LocalDateTime.now().minusHours(3).toLocalDate(), new BigDecimal("1000.00"), DEBIT);
-        assertAccountTransaction(statements.get(0).getTransactions().get(1), 101L, "test_description_101", LocalDateTime.now().minusHours(1).toLocalDate(), new BigDecimal("3000.00"), DEBIT);
-        assertAccountTransaction(statements.get(0).getTransactions().get(2), 102L, "test_description_102", LocalDate.now(), new BigDecimal("7000.00"), CREDIT);
-        assertAccountTransaction(statements.get(1).getTransactions().get(0), 103L, "test_description_103", LocalDate.now().minusMonths(3), new BigDecimal("7000.00"), CREDIT);
-        assertAccountTransaction(statements.get(1).getTransactions().get(1), 104L, "test_description_104", LocalDate.now().minusMonths(3), new BigDecimal("1000.00"), DEBIT);
-        assertAccountTransaction(statements.get(1).getTransactions().get(2), 105L, "test_description_105", LocalDate.now().minusMonths(3), new BigDecimal("2000.00"),DEBIT);
+        assertAccountTransaction(statements.get(0).getTransactions().get(0), 104L, "test_description_104", LocalDate.now().minusMonths(3), new BigDecimal("7000.00"), CREDIT);
+        assertAccountTransaction(statements.get(0).getTransactions().get(1), 105L, "test_description_105", LocalDate.now().minusMonths(3), new BigDecimal("1000.00"), DEBIT);
+        assertAccountTransaction(statements.get(0).getTransactions().get(2), 106L, "test_description_106", LocalDate.now().minusMonths(3), new BigDecimal("2000.00"), DEBIT);
+        assertAccountTransaction(statements.get(1).getTransactions().get(0), 107L, "test_description_107", LocalDateTime.now().minusHours(3).toLocalDate(), new BigDecimal("1000.00"), DEBIT);
+        assertAccountTransaction(statements.get(1).getTransactions().get(1), 108L, "test_description_108", LocalDateTime.now().minusHours(1).toLocalDate(), new BigDecimal("3000.00"), DEBIT);
+        assertAccountTransaction(statements.get(1).getTransactions().get(2), 109L, "test_description_109", LocalDate.now(), new BigDecimal("7000.00"), CREDIT);
 
     }
 
     private void assertAllTransactions(MvcResult result) throws Exception {
-        assertLastSixMonthTransactions(result);
         List<AccountStatement> statements = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<AccountStatement>>() {});
-        assertAccountTransaction(statements.get(2).getTransactions().get(0), 106L, "test_description_106", LocalDate.now().minusMonths(7), new BigDecimal("3000.00"), DEBIT);
-        assertAccountTransaction(statements.get(2).getTransactions().get(1), 107L, "test_description_107", LocalDate.now().minusMonths(7), new BigDecimal("4000.00"), DEBIT);
-        assertAccountTransaction(statements.get(2).getTransactions().get(2), 108L, "test_description_108", LocalDate.now().minusMonths(7), new BigDecimal("7000.00"), CREDIT);
+        assertAccountTransaction(statements.get(0).getTransactions().get(0), 101L, "test_description_101", LocalDate.now().minusMonths(7), new BigDecimal("3000.00"), DEBIT);
+        assertAccountTransaction(statements.get(0).getTransactions().get(1), 102L, "test_description_102", LocalDate.now().minusMonths(7), new BigDecimal("4000.00"), DEBIT);
+        assertAccountTransaction(statements.get(0).getTransactions().get(2), 103L, "test_description_103", LocalDate.now().minusMonths(7), new BigDecimal("7000.00"), CREDIT);
+        assertAccountTransaction(statements.get(1).getTransactions().get(0), 104L, "test_description_104", LocalDate.now().minusMonths(3), new BigDecimal("7000.00"), CREDIT);
+        assertAccountTransaction(statements.get(1).getTransactions().get(1), 105L, "test_description_105", LocalDate.now().minusMonths(3), new BigDecimal("1000.00"), DEBIT);
+        assertAccountTransaction(statements.get(1).getTransactions().get(2), 106L, "test_description_106", LocalDate.now().minusMonths(3), new BigDecimal("2000.00"), DEBIT);
+        assertAccountTransaction(statements.get(2).getTransactions().get(0), 107L, "test_description_107", LocalDateTime.now().minusHours(3).toLocalDate(), new BigDecimal("1000.00"), DEBIT);
+        assertAccountTransaction(statements.get(2).getTransactions().get(1), 108L, "test_description_108", LocalDateTime.now().minusHours(1).toLocalDate(), new BigDecimal("3000.00"), DEBIT);
+        assertAccountTransaction(statements.get(2).getTransactions().get(2), 109L, "test_description_109", LocalDate.now(), new BigDecimal("7000.00"), CREDIT);
 
     }
 
