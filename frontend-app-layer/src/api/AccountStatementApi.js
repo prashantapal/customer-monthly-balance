@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from "axios"
 
-const baseURL = process.env.REACT_APP_REST_URL;
+const baseURL = process.env.REACT_APP_REST_URL
 
 const headers = {
   Authorization: 'Basic ' + process.env.REACT_APP_AUTH_KEY

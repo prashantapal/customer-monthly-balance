@@ -1,17 +1,13 @@
-.App {
-    text-align: center;
+.centered {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.spinner{
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
+.centered-height {
+    height: 100vh;
 }
-
-
 
 table, td, tr {
     padding: 3px 25px;

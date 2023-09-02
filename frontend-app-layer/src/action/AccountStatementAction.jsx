@@ -1,15 +1,15 @@
-import {useEffect, useRef, useState} from 'react';
-import {Oval} from 'react-loader-spinner';
-import api from '../api/AccountStatementApi';
-import AccountStatementView from "../view/AccountStatementView";
-import '../style/AccountStatement.css';
+import {useEffect, useRef, useState} from 'react'
+import {Oval} from 'react-loader-spinner'
+import api from '../api/AccountStatementApi'
+import AccountStatementView from "../view/AccountStatementView"
+import '../style/AccountStatement.css'
 
 const AccountStatementAction = () => {
-  const count = useRef(0);
-  const [isLoading, setLoading] = useState(true);
-  const [isAuthError, setAuthError] = useState(false);
-  const [isError, setError] = useState(false);
-  const [accountStatements, setAccountStatements] = useState([]);
+  const count = useRef(0)
+  const [isLoading, setLoading] = useState(true)
+  const [isAuthError, setAuthError] = useState(false)
+  const [isError, setError] = useState(false)
+  const [accountStatements, setAccountStatements] = useState([])
 
   useEffect(() => {
     if (count.current !== 0) {
@@ -29,13 +29,13 @@ const AccountStatementAction = () => {
         }
       })
     }
-    count.current++;
-  }, []);
+    count.current++
+  }, [])
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading />
   } else if (isAuthError) {
-    return <AuthError />;
+    return <AuthError />
   } else if (isError) {
     return <Error />
   } else {
@@ -44,7 +44,7 @@ const AccountStatementAction = () => {
 }
 
 const Loading = () => (
-  <div className="spinner">
+  <div className="centered">
     <Oval
       ariaLabel="loading-indicator"
       height={80}
@@ -55,17 +55,17 @@ const Loading = () => (
       secondaryColor="lightblue"
     />
   </div>
-);
+)
 
 const AuthError = () => (
-  <div className="App">
+  <div className="centered">
     <h3>Invalid username or password!!!</h3>
   </div>
-);
+)
 
 const Error = () => (
-  <div className="App">
+  <div className="centered">
     <h3>Internal server error!!!</h3>
   </div>
-);
-export default AccountStatementAction;
+)
+export default AccountStatementAction
