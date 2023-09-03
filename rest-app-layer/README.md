@@ -1,6 +1,6 @@
 ### customer-monthly-balance
 
-   Calculating monthly balance of customer of Housing Corporation Development Limited bank.
+   This is the rest layer or business layer of the <b>customer-monthly-balance</b> application. This module calculates customer balances, transactions, cumulative balances etc and sends them to the UI layer. This module is a springboot microservice.
 
 ### Setup Development Environment
 
@@ -58,6 +58,7 @@
 
       ```
       nohup java -jar -DHCDL_REST customer-monthly-balance-rest-master-SNAPSHOT.jar >> <log_file_name>  2>&1 &
+      
       ```
   - During run time database configuration can be overridden using `-Dspring.datasource.url=<database url>` etc.
   - The rest application runs on port 9357.
@@ -66,5 +67,6 @@
 
     ```
     ps aux | grep HCDL_REST | grep 'customer-monthly-balance-rest-master' | awk {'print$2'} | xargs kill -9
+
     ```
 
