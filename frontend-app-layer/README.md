@@ -1,6 +1,6 @@
 ### frontend-app-layer
 
-This is the UI or front layer of the <b>customer-monthly-balance</b> application. This module shows the customer balance details in a nicer UI.
+This is the UI or front layer of the <b>customer-monthly-balance</b> application. This module shows the customer balance details in a nicer UI. This module talks with rest module to fetch customer balances and shows in UI.
 
 ### Setup Development Environment
 

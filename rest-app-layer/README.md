@@ -1,6 +1,6 @@
 ### rest-app-layer
 
-This is the rest layer or business layer of the <b>customer-monthly-balance</b> application. This module calculates customer balances, transactions, cumulative balances etc and sends them to the UI layer. This module is a springboot microservice. This module talks with rest module to fetch customer balances and shows in UI.
+This is the rest layer or business layer of the <b>customer-monthly-balance</b> application. This module calculates customer balances, transactions, cumulative balances etc and sends them to the UI layer. This module is a springboot microservice.
 
 ### Setup Development Environment
 
