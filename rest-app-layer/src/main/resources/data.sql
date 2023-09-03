@@ -26,10 +26,10 @@ insert into transaction (user_name, description, transaction_date, transaction_a
 insert into transaction (user_name, description, transaction_date, transaction_amount, transaction_type) values('admin', 'Transferred to Jack XXX535657', now() - 1 hour, 3000.00, 'DEBIT');
 insert into transaction (user_name, description, transaction_date, transaction_amount, transaction_type) values('admin', 'Salary credited XXX5336757', now(), 7000.00, 'CREDIT');
 
+insert into transaction (user_name, description, transaction_date, transaction_amount, transaction_type) values('test_user', 'Transferred to James XXX633657', now() - 31 day, 1000.00, 'DEBIT');
+insert into transaction (user_name, description, transaction_date, transaction_amount, transaction_type) values('test_user', 'Transferred to Hina XXX635657', now() - 31 day, 1000.00, 'DEBIT');
+insert into transaction (user_name, description, transaction_date, transaction_amount, transaction_type) values('test_user', 'Salary credited XXX6336757', now() - 31 day, 7000.00, 'CREDIT');
+
 insert into transaction (user_name, description, transaction_date, transaction_amount, transaction_type) values('test_user', 'Transferred to James XXX633657', now() - 3 hour, 1000.00, 'DEBIT');
 insert into transaction (user_name, description, transaction_date, transaction_amount, transaction_type) values('test_user', 'Transferred to Hina XXX635657', now() - 1 hour, 1000.00, 'DEBIT');
 insert into transaction (user_name, description, transaction_date, transaction_amount, transaction_type) values('test_user', 'Salary credited XXX6336757', now(), 7000.00, 'CREDIT');
-
-insert into transaction (user_name, description, transaction_date, transaction_amount, transaction_type) values('test_user', 'Transferred to James XXX633657', now() - 35 day, 1000.00, 'DEBIT');
-insert into transaction (user_name, description, transaction_date, transaction_amount, transaction_type) values('test_user', 'Transferred to Hina XXX635657', now() - 34 day, 1000.00, 'DEBIT');
-insert into transaction (user_name, description, transaction_date, transaction_amount, transaction_type) values('test_user', 'Salary credited XXX6336757', now() - 33 day, 7000.00, 'CREDIT');
