@@ -1,5 +1,4 @@
-import React, { useState } from "react"
-import ReactDOM from "react-dom";
+import React from "react"
 import AccountStatementAction from "./action/AccountStatementAction"
 import logo from "./image/logo.jpg"
 import "./style/accountStatement.css"

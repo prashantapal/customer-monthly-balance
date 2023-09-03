@@ -1,6 +1,6 @@
-### customer-monthly-balance
+### rest-app-layer
 
-Calculating monthly balance and cumulative balance of customers of Housing Co-operative Development Limited bank.
+This is the rest layer or business layer of the <b>customer-monthly-balance</b> application. This module calculates customer balances, transactions, cumulative balances etc and sends them to the UI layer. This module is a springboot microservice. This module talks with rest module to fetch customer balances and shows in UI.
 
 ### Setup Development Environment
 
@@ -9,7 +9,7 @@ Calculating monthly balance and cumulative balance of customers of Housing Co-op
   - Maven 3.7+
 
 - ##### Compile and build it
-  - Use `mvn clean install`.
+  - In this project directory, use `mvn clean install`.
   - To skip test cases, use `mvn clean install -Dmaven.test.skip=true`.
 
 - ##### IDE
@@ -48,6 +48,7 @@ Calculating monthly balance and cumulative balance of customers of Housing Co-op
      - Initial configuration: [here](https://github.com/prashantapal/customer-monthly-balance/blob/master/rest-app-layer/src/main/resources/schema.sql)
 
 ### Run it in remote environment
+
   - Change the data configuration if you need, from [here](https://github.com/prashantapal/customer-monthly-balance/blob/master/rest-app-layer/src/main/resources/application.properties).
   - Logging configuration can be changed from [here](https://github.com/prashantapal/customer-monthly-balance/blob/master/rest-app-layer/src/main/resources/logback-spring.xml).
   - Build the project in local using `mvn clean install`.
