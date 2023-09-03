@@ -31,4 +31,4 @@
   - Configure the domain name in conf directory `/etc/httpd/conf.d`.
   - Start the httpd server using `systemctl start httpd`.
   - Stop the httpd server using `systemctl stop httpd`.
-  - The UI application will be opened using the domain name configured in httpd conf file.
+  - The UI application can be opened using the domain name configured in httpd conf file.
