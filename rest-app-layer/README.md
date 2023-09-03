@@ -58,7 +58,7 @@
 
       ```
       nohup java -jar -DHCDL_REST customer-monthly-balance-rest-master-SNAPSHOT.jar >> <log_file_name>  2>&1 &
-      
+
       ```
   - During run time database configuration can be overridden using `-Dspring.datasource.url=<database url>` etc.
   - The rest application runs on port 9357.

@@ -22,7 +22,7 @@
 
 ### Run it in remote environment
 
-  - In remote server the rest application should run in http://localhost:9357. Please check rest layer deployment step from [here](https://github.com/prashantapal/customer-monthly-balance/tree/master/rest-app-layer#run-it-in-local-environment).
+  - In remote server, the rest application should run in http://localhost:9357. Please check rest layer deployment step from [here](https://github.com/prashantapal/customer-monthly-balance/blob/master/rest-app-layer/README.md#run-it-in-remote-environment).
   - In remote server, we need web server, so you need to install either nginx or apache httpd.
   - Install apache httpd in remote server, please check from [here](https://httpd.apache.org/docs/2.4/install.html).
   - In local system, build the project using `npm install && npm run build`.
