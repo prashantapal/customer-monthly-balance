@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
-import _ from 'lodash'
-import { Oval } from 'react-loader-spinner'
-import api from '../api/AccountStatementApi'
+import { useEffect, useRef, useState } from "react"
+import _ from "lodash"
+import { Oval } from "react-loader-spinner"
+import api from "../api/AccountStatementApi"
 import AccountStatementView from "../view/AccountStatementView"
-import '../style/AccountStatement.css'
+import "../style/AccountStatement.css"
 
 const AccountStatementAction = () => {
   const count = useRef(0)

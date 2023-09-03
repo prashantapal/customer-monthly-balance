@@ -1,12 +1,41 @@
+.header {
+    display: grid;
+    grid-template-columns: 50px 1fr 50px;
+    height: 100%;
+    width: 30%;
+}
+
 .centered {
-    height: 80vh;
+    height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.centered-height {
-    height: 100vh;
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+p.currency {
+    font-size: 10px;
+    font-family: Serif;
+    color: #c50606;
+    line-height: 1px;
+    margin-right: 35px;
+}
+
+p.heading {
+    font-size: 17px;
+    font-family: Serif;
+    color: #511b6c;
+    line-height: 1px;
+    margin-left: 17px;
+}
+
+div.account-statement {
+    margin-left: 17px;
+    margin-bottom: 30px;
 }
 
 table.transaction, table.transaction th, table.transaction tr, table.transaction td {

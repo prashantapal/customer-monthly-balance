@@ -1,9 +1,29 @@
-import React from 'react'
-import Table from 'react-bootstrap/Table'
+import React from "react"
+import _ from "lodash"
+import Table from "react-bootstrap/Table"
 import moment from "moment"
+import "../style/AccountStatement.css"
 
 const AccountStatementView = ({ accountStatements }) => (
-  <div className="centered centered-height">
+  <>
+    <Heading {...{accountStatements}} />
+    <AccountStatements {...{accountStatements}} />
+  </>
+)
+
+const Heading = ({ accountStatements }) => {
+  const periodStartDate = moment(_.last(accountStatements).month).format("DD-MM-YYYY")
+  const periodEndDate = moment(_.head(accountStatements).month).endOf("month").format("DD-MM-YYYY")
+  return (
+    <div className="wrapper">
+      <p className="heading">Your account statements from {periodStartDate} to {periodEndDate}.</p>
+      <p className="currency">* All amounts are in EUR</p>
+    </div>
+  )
+}
+
+const AccountStatements = ({ accountStatements }) => (
+  <div className="account-statement">
     <Table className="transaction">
       <thead>
         <tr>
