@@ -21,3 +21,9 @@ Please check each module for more details.
 
   - For frontend-app-layer, please check from [here](https://github.com/prashantapal/customer-monthly-balance/tree/master/frontend-app-layer#run-it-in-remote-environment).
  - For rest-app-layer, please check from [here](https://github.com/prashantapal/customer-monthly-balance/blob/master/rest-app-layer/README.md#run-it-in-remote-environment).
+
+### Testing
+- Open the UI using url http://localhost:9355/ or using the httpd doamin name.
+- The username and passwords are,
+   Usernames - admin, Password - admin
+   Username - test_user, Password - userpassword
