@@ -2,7 +2,7 @@ import React from "react"
 import _ from "lodash"
 import Table from "react-bootstrap/Table"
 import moment from "moment"
-import "../style/AccountStatement.css"
+import "../style/accountStatement.css"
 
 const AccountStatementView = ({ accountStatements }) => (
   <>

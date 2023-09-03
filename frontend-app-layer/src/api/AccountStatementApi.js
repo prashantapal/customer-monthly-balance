@@ -2,28 +2,17 @@ import axios from "axios"
 
 const baseURL = process.env.REACT_APP_REST_URL
 
-const headers = {
-  Authorization: 'Basic ' + process.env.REACT_APP_AUTH_KEY
-}
-
-const auth = {
-  username: process.env.REACT_APP_REST_USERNAME,
-  password: process.env.REACT_APP_REST_PASSWORD
-}
-
 class AccountStatementApi {
 
-  fetchAccountStatements() {
+  fetchAccountStatements(token) {
     return axios.get(baseURL + "/account-statement", {
-        headers: headers
-      }
-    )
+      headers: this._getAuthorizationHeader(token)
+    })
   }
 
-  _getAuth(username, password) {
+  _getAuthorizationHeader(token) {
     return {
-      username: username,
-      password: password
+      Authorization: "Basic " + token
     }
   }
 
