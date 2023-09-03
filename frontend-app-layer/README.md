@@ -15,7 +15,7 @@
   - Import the [frontend-app-layer](https://github.com/prashantapal/customer-monthly-balance/tree/master/frontend-app-layer) directory.
 
 ### Run it in local environment
-  - In the project directory, run the command `npm start`.
+  - In the project directory, run the command `npm install && npm start`.
   - The UI application runs on port 9355.
   - Open [http://localhost:9355](http://localhost:9355)
   - To work this UI application correctly, you need to run rest layer in local. Please check rest layer deployment step from [here](https://github.com/prashantapal/customer-monthly-balance/tree/master/rest-app-layer#run-it-in-local-environment).
