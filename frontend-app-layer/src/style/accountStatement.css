@@ -6,7 +6,7 @@
 }
 
 .centered {
-    height: 50vh;
+    height: 60vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,6 +31,7 @@ p.heading {
     color: #511b6c;
     line-height: 1px;
     margin-left: 17px;
+    margin-bottom: 20px;
 }
 
 div.account-statement {
@@ -53,4 +54,9 @@ table.transaction, table.transaction th, table.transaction tr, table.transaction
 
 .debit {
     color: #c50606;
+}
+
+.error {
+    font-family: Serif;
+    color: #511b6c;
 }
