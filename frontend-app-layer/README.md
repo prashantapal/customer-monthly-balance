@@ -5,7 +5,7 @@
 ### Setup Development Environment
 
 - ##### Requirement
-  - Node.js v16.10.0, install it with [NVM](https://github.com/creationix/nvm)
+  - Node.js v16.10.0, install it with [NVM](https://github.com/creationix/nvm).
 
 - ##### Compile and build it
   - npm install && npm start

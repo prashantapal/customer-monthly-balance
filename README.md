@@ -1,4 +1,4 @@
-### customer-monthly-balance
+### Customer-Monthly-Balance
 
 Calculating monthly balance and cumulative balance of customers of Housing Co-operative Development Limited(HCDL) bank and shows in webpage. There is two modules of this application.
 
