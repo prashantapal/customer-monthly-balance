@@ -24,7 +24,7 @@
   - One way is, open the project in IDE and run the class `CustomerMonthlyBalanceRestApplication`.
   - or, after maven build, run `java -jar target/customer-monthly-balance-rest-master-SNAPSHOT.jar`.
   - or, after maven build, run `mvn spring-boot:run`.
-  - Data configuration can be changed from [here](https://github.com/prashantapal/customer-monthly-balance/blob/master/rest-app-layer/src/main/resources/application.properties).
+  - Database configuration can be changed from [here](https://github.com/prashantapal/customer-monthly-balance/blob/master/rest-app-layer/src/main/resources/application.properties).
   - The rest application runs on port 9357.
   - Health check url - http://localhost:9357/health-check
   - Account statements for last 6 months - GET http://localhost:9357/account-statement

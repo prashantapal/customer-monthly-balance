@@ -24,7 +24,7 @@
 
   - In remote server, the rest application should run in http://localhost:9357. Please check rest layer deployment step from [here](https://github.com/prashantapal/customer-monthly-balance/blob/master/rest-app-layer/README.md#run-it-in-remote-environment).
   - In remote server, we need web server, so you need to install either nginx or apache httpd.
-  - Here steps are given for httpd server. Install apache httpd in remote server from [here](https://httpd.apache.org/docs/2.4/install.html).
+  - Here steps are given for httpd server. Install apache httpd in remote server, please from [here](https://httpd.apache.org/docs/2.4/install.html).
   - In local system, build the project using `npm install && npm run build`.
   - After local build, the new directory `build` is created inside frontend-app-layer directory.
   - Transfer the content the of build directory to remote location directory `/var/www/html`.
