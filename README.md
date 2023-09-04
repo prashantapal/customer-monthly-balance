@@ -27,5 +27,7 @@ Please check  more details in readme of each module.
 - If the application is running in local, open the url http://localhost:9355.
 - If the application is running in remote server, use the httpd doamin name configured in remote server to open the application.
 - The username and passwords are,
-   Username - admin, Password - admin
-   Username - test_user, Password - userpassword
+
+   `Username - admin, Password - admin`
+
+   `Username - test_user, Password - userpassword`
