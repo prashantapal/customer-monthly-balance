@@ -14,7 +14,7 @@ Please check  more details in readme of each module.
 
 ### Run it in local environment
 
- - For frontend layer, please check from [here](https://github.com/prashantapal/customer-monthly-balance/tree/master/frontend-app-layer#run-it-in-remote-environment).
+ - For frontend layer, please check from [here](https://github.com/prashantapal/customer-monthly-balance/tree/master/frontend-app-layer#run-it-in-local-environment).
  - For rest layer, please check from [here](https://github.com/prashantapal/customer-monthly-balance/blob/master/rest-app-layer/README.md#run-it-in-local-environment).
 
 ### Run it in remote environment
@@ -25,7 +25,7 @@ Please check  more details in readme of each module.
 ### Testing
 
 - If the application is running in local, open the url http://localhost:9355.
-- If the application is runing in remote server, use the httpd doamin name configured in remote server to open the application.
+- If the application is running in remote server, use the httpd doamin name configured in remote server to open the application.
 - The username and passwords are,
    Username - admin, Password - admin
    Username - test_user, Password - userpassword
